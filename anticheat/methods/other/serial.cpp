@@ -28,7 +28,7 @@ void serial::PrintBootUUID()
 		return;
 	}
 
-	printf("BootUUID : %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X\n",
+	printf("[SERIAL] BootUUID : %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X\n",
 		boot_info->BootIdentifier.Data1, 
 		boot_info->BootIdentifier.Data2, 
 		boot_info->BootIdentifier.Data3, 

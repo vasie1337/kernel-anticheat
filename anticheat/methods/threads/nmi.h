@@ -6,20 +6,13 @@ class nmi
 public:
 	void init();
 
-	/// <summary>
-	/// Scan cores for suspicious activity by firing NMI
-	/// </summary>
-	/// <param name="count"> 
-	/// Number of times each core should be scanned
-	/// </param>
-	/// <returns>
-	/// True if successful, false otherwise
-	/// </returns>
-	bool scan(int count);
+	bool fire(int count);
+	void scan();
 
 private:
 	void fire_nmi(int core, PKAFFINITY_EX mask);
 	
+	static void capture_stack();
 	static BOOLEAN callback(PVOID context, BOOLEAN handled);
 
 	ULONG core_count = 0;
@@ -27,7 +20,7 @@ private:
 
 	PNMI_CONTEXT context = nullptr;
 	PKAFFINITY_EX mask = nullptr;
-	void* results = nullptr;
+	inline static ULONG64* results = nullptr;
 	HANDLE nmi_handle = nullptr;
 
 	bool did_init = false;

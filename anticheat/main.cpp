@@ -19,9 +19,11 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT drv_obj, PUNICODE_STRING reg)
 	g_pool.scan_big_pool();
 	g_serial.print();
 	g_traces.check_pid_db_cache_table();
-	g_nmi.init();
-	g_nmi.scan(1);
 	g_threads.scan_system_threads();
+
+	g_nmi.init();
+	g_nmi.fire(4);
+	g_nmi.scan();
 
 	return STATUS_SUCCESS;
 }

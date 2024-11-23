@@ -22,6 +22,7 @@
     <ClInclude Include="methods\other\traces.h" />
     <ClInclude Include="methods\threads\nmi.h" />
     <ClInclude Include="methods\threads\threads.h" />
+    <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Inf Include="anticheat.inf" />

@@ -9,6 +9,8 @@
 
 #include "kernel.h"
 
+#include "utils/utils.h"
+
 #include "methods/drivers/drivers.h"
 #include "methods/handles/handles.h"
 #include "methods/hypervisor/hv.h"

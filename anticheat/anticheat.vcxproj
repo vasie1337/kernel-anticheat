@@ -205,6 +205,7 @@
     <ClInclude Include="methods\other\serial.h" />
     <ClInclude Include="methods\threads\threads.h" />
     <ClInclude Include="methods\threads\nmi.h" />
+    <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -38,7 +38,7 @@ bool handles::check_physical_mem_handles()
 		{
 			if (!ObIsKernelHandle(reinterpret_cast<HANDLE>(handles->Handles[i].Handle)))
 			{
-				printf("Usermode PhysicalMemory handle detected, pid = %d, access = 0x%x.\n",
+				printf("[HANDLES] Usermode PhysicalMemory handle detected, pid = %d, access = 0x%x.\n",
 					handles->Handles[i].uIdProcess, 
 					handles->Handles[i].GrantedAccess
 				);
@@ -52,7 +52,7 @@ bool handles::check_physical_mem_handles()
 	ExFreePool(handles);
 
 	if (!found)
-		printf("No usermode PhysicalMemory handles detected.\n");
+		printf("[HANDLES] No usermode PhysicalMemory handles detected.\n");
 
 	return true;
 }
