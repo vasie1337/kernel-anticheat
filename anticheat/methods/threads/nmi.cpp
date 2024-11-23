@@ -37,14 +37,14 @@ bool nmi::fire(int count)
 {
 	if (!did_init)
 	{
-		printf("NMI not initialized\n");
+		printf("[NMI] NMI not initialized\n");
 		return false;
 	}
 
 	nmi_handle = KeRegisterNmiCallback(callback, nullptr);
 	if (!nmi_handle)
 	{
-		printf("Failed to register NMI callback\n");
+		printf("[NMI] Failed to register NMI callback\n");
 		return false;
 	}
 
@@ -114,7 +114,7 @@ void nmi::capture_stack()
 	void** stack_trace = reinterpret_cast<void**>(ExAllocatePool(NonPagedPool, PAGE_SIZE));
 	if (!stack_trace)
 	{
-		printf("Failed to allocate memory for stack trace\n");
+		printf("[NMI] Failed to allocate memory for stack trace\n");
 		return;
 	}
 
@@ -135,12 +135,12 @@ void nmi::capture_stack()
 		}
 	}
 
-	printf("Stack trace captured\n");
+	printf("[NMI] Stack trace captured\n");
 }
 
 BOOLEAN nmi::callback(PVOID context, BOOLEAN handled)
 {
-	printf("NMI fired\n");
+	printf("[NMI] NMI fired\n");
 
 	capture_stack();
 
