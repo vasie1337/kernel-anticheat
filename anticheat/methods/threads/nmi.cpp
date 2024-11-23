@@ -1,9 +1,9 @@
 #include "nmi.h"
 
-PVOID               g_NmiCallbackHandle;
+void*               g_NmiCallbackHandle;
 PKAFFINITY_EX       g_NmiAffinity;
 PNMI_CONTEXT        g_NmiContext;
-PVOID               g_PageOfpStackWalkResult;
+void*               g_PageOfpStackWalkResult;
 BOOLEAN             NMIStop;
 HANDLE              SendNMIThreadHandle;
 
@@ -17,7 +17,7 @@ BOOLEAN FireNMI(INT core, PKAFFINITY_EX affinity)
 	return TRUE;
 }
 
-VOID DetectionThread(PVOID StartContext)
+VOID DetectionThread(void* StartContext)
 {
 	UNREFERENCED_PARAMETER(StartContext);
 
@@ -38,7 +38,7 @@ VOID DetectionThread(PVOID StartContext)
 				continue;
 
 			// Check if the stackTrace is valid and there are captured frames to loop through
-			if (MmIsAddressValid(((PVOID*)g_PageOfpStackWalkResult)[i]) && ((DWORD64*)g_PageOfpStackWalkResult)[i + 1])
+			if (MmIsAddressValid(((void**)g_PageOfpStackWalkResult)[i]) && ((DWORD64*)g_PageOfpStackWalkResult)[i + 1])
 			{
 				// Loop through the captured frames
 				for (SIZE_T j = 0; i < ((DWORD64*)g_PageOfpStackWalkResult)[i + 1]; j++)
@@ -58,7 +58,7 @@ VOID DetectionThread(PVOID StartContext)
 
 			// Remove the stackTrace and the capturedFrames out of the list,
 			// So the NMI callback can store new ones.
-			ExFreePoolWithTag(((PVOID*)g_PageOfpStackWalkResult)[i], AC_POOL_TAG);
+			ExFreePoolWithTag(((void**)g_PageOfpStackWalkResult)[i], AC_POOL_TAG);
 			((DWORD64*)g_PageOfpStackWalkResult)[i] = 0;
 			((DWORD64*)g_PageOfpStackWalkResult)[i + 1] = 0;
 		}
@@ -67,12 +67,12 @@ VOID DetectionThread(PVOID StartContext)
 }
 
 
-BOOLEAN NmiCallback(PVOID context, BOOLEAN handled)
+BOOLEAN NmiCallback(void* context, BOOLEAN handled)
 {
 	UNREFERENCED_PARAMETER(context);
 	UNREFERENCED_PARAMETER(handled);
 
-	PVOID* stackTrace = ExAllocatePoolWithTag(NonPagedPool, 0x1000, AC_POOL_TAG);
+	void** stackTrace = ExAllocatePoolWithTag(NonPagedPool, 0x1000, AC_POOL_TAG);
 
 	if (!stackTrace)
 		return TRUE;

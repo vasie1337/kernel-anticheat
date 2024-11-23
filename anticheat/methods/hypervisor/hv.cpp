@@ -1,14 +1,12 @@
 #include "hv.h"
 
-VOID HypervisorDetection()
+void hv::check_vmread()
 {
-	DbgPrintEx(0, 0, "HyperVisor Detection Started : ");
-
 	__try {
 		__vmx_vmread(0, 0);
-		DbgPrint("Detected Hypervisor\n");
+		DbgPrint("Hypervisor running\n");
 	}
-	__except (EXCEPTION_EXECUTE_HANDLER) {}
-
-	DbgPrintEx(0, 0, "HyperVisor Detection Finished");
+	__except (EXCEPTION_EXECUTE_HANDLER) {
+		DbgPrint("Hypervisor not running\n");
+	}
 }

@@ -4,6 +4,7 @@
 class drivers
 {
 public:
+	bool scan();
 
 private:
 

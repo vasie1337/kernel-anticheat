@@ -21,10 +21,10 @@ VOID WaitThreadTerminate(HANDLE ThreadHandle)
 	{
 		PETHREAD ThreadObject = NULL;
 
-		if (NT_SUCCESS(ObReferenceObjectByHandle(ThreadHandle, THREAD_ALL_ACCESS, NULL, KernelMode, (PVOID*)(&ThreadObject), NULL)))
+		if (NT_SUCCESS(ObReferenceObjectByHandle(ThreadHandle, THREAD_ALL_ACCESS, NULL, KernelMode, (void**)(&ThreadObject), NULL)))
 		{
-			KeWaitForSingleObject((PVOID)(ThreadObject), Executive, KernelMode, FALSE, NULL);
-			ObDereferenceObject((PVOID)(ThreadObject));
+			KeWaitForSingleObject((void*)(ThreadObject), Executive, KernelMode, FALSE, NULL);
+			ObDereferenceObject((void*)(ThreadObject));
 		}
 	}
 }
@@ -67,23 +67,23 @@ UINT64 FindPattern(UINT64 dwAddress, UINT64 dwLen, BYTE* bMask, char* szMask)
     return 0;
 }
 
-PVOID ResolveRelativeAddress(PVOID Instruction, ULONG OffsetOffset, ULONG InstructionSize)
+void* ResolveRelativeAddress(void* Instruction, ULONG OffsetOffset, ULONG InstructionSize)
 {
     ULONG_PTR Instr = (ULONG_PTR)Instruction;
     LONG RipOffset = *(PLONG)(Instr + OffsetOffset);
-    PVOID ResolvedAddr = (PVOID)(Instr + InstructionSize + RipOffset);
+    void* ResolvedAddr = (void*)(Instr + InstructionSize + RipOffset);
 
     return ResolvedAddr;
 }
 
-PVOID GetKernelBase(OUT PULONG pSize)
+void* GetKernelBase(OUT PULONG pSize)
 {
     NTSTATUS status = STATUS_SUCCESS;
     ULONG bytes = 0;
     PRTL_PROCESS_MODULES pMods = NULL;
-    PVOID checkPtr = NULL;
+    void* checkPtr = NULL;
     UNICODE_STRING routineName;
-	PVOID g_KernelBase = NULL;
+	void* g_KernelBase = NULL;
 	ULONG g_KernelSize = 0;
 
     if (g_KernelBase != NULL)
@@ -116,7 +116,7 @@ PVOID GetKernelBase(OUT PULONG pSize)
         for (ULONG i = 0; i < pMods->NumberOfModules; i++)
         {
             if (checkPtr >= pMod[i].ImageBase &&
-                checkPtr < (PVOID)((PUCHAR)pMod[i].ImageBase + pMod[i].ImageSize))
+                checkPtr < (void*)((PUCHAR)pMod[i].ImageBase + pMod[i].ImageSize))
             {
                 g_KernelBase = pMod[i].ImageBase;
                 g_KernelSize = pMod[i].ImageSize;
@@ -154,15 +154,4 @@ VOID GetThreadStartAddress(PETHREAD ThreadObj, uintptr_t* pStartAddr)
 	*pStartAddr = start_addr;
 
 	NtClose(hThread);
-}
-
-PSYSTEM_HANDLE_INFORMATION GetHandleList()
-{
-	ULONG neededSize = 8 * 1024 * 1024;
-
-	PSYSTEM_HANDLE_INFORMATION pHandleList;
-
-	pHandleList = (PSYSTEM_HANDLE_INFORMATION)ExAllocatePoolWithTag(NonPagedPool, neededSize, AC_POOL_TAG);
-	ZwQuerySystemInformation(SystemHandleInformation, pHandleList, neededSize, 0);
-	return pHandleList;
 }

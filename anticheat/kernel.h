@@ -12,7 +12,7 @@ typedef struct _SYSTEM_HANDLE
 	UCHAR 	ObjectType;
 	UCHAR 	Flags;
 	USHORT 	Handle;
-	PVOID 	pObject;
+	void* 	pObject;
 	ACCESS_MASK 	GrantedAccess;
 }SYSTEM_HANDLE;
 
@@ -23,7 +23,7 @@ typedef struct _SYSTEM_HANDLE_INFORMATION {
 
 typedef struct _SYSTEM_BIGPOOL_ENTRY {
 	union {
-		PVOID VirtualAddress;
+		void* VirtualAddress;
 		ULONG_PTR NonPaged : 1;
 	};
 	ULONG_PTR SizeInBytes;
@@ -64,8 +64,8 @@ typedef struct _PiDDBCacheEntry
 typedef struct _MM_UNLOADED_DRIVER
 {
 	UNICODE_STRING 	Name;
-	PVOID 			ModuleStart;
-	PVOID 			ModuleEnd;
+	void* 			ModuleStart;
+	void* 			ModuleEnd;
 	ULONG64 		UnloadTime;
 } MM_UNLOADED_DRIVER, * PMM_UNLOADED_DRIVER;
 
@@ -77,8 +77,8 @@ typedef struct _NMI_CONTEXT
 typedef struct _RTL_PROCESS_MODULE_INFORMATION
 {
 	HANDLE Section;
-	PVOID MappedBase;
-	PVOID ImageBase;
+	void* MappedBase;
+	void* ImageBase;
 	ULONG ImageSize;
 	ULONG Flags;
 	USHORT LoadOrderIndex;
@@ -146,8 +146,8 @@ typedef enum _SYSTEM_INFORMATION_CLASS
 typedef struct _SYSTEM_MODULE_ENTRY
 {
 	HANDLE Section;
-	PVOID MappedBase;
-	PVOID ImageBase;
+	void* MappedBase;
+	void* ImageBase;
 	ULONG ImageSize;
 	ULONG Flags;
 	USHORT LoadOrderIndex;
@@ -174,9 +174,9 @@ EXTERN_C_START
 VOID KeInitializeAffinityEx(PKAFFINITY_EX affinity);
 VOID KeAddProcessorAffinityEx(PKAFFINITY_EX affinity, INT num);
 VOID HalSendNMI(PKAFFINITY_EX affinity);
-NTSTATUS MmCopyVirtualMemory(PEPROCESS SourceProcess, PVOID SourceAddress, PEPROCESS TargetProcess, PVOID TargetAddress, SIZE_T BufferSize, KPROCESSOR_MODE PreviousMode, PSIZE_T ReturnSize);
-NTSTATUS ZwQuerySystemInformation(ULONG InfoClass, PVOID Buffer, ULONG Length, PULONG ReturnLength);
-NTSTATUS NtQueryInformationThread(HANDLE ThreadHandle, THREADINFOCLASS ThreadInformationClass, PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
+NTSTATUS MmCopyVirtualMemory(PEPROCESS SourceProcess, void* SourceAddress, PEPROCESS TargetProcess, void* TargetAddress, SIZE_T BufferSize, KPROCESSOR_MODE PreviousMode, PSIZE_T ReturnSize);
+NTSTATUS ZwQuerySystemInformation(ULONG InfoClass, void* Buffer, ULONG Length, PULONG ReturnLength);
+NTSTATUS NtQueryInformationThread(HANDLE ThreadHandle, THREADINFOCLASS ThreadInformationClass, void* ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
 __int64 __fastcall PsGetProcessSectionBaseAddress(__int64 a1);
 
 EXTERN_C_END

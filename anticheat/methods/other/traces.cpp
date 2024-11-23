@@ -4,7 +4,7 @@ VOID CheckPIDDBCacheTable()
 {
     DbgPrintEx(0, 0, "Scanning PIDDBCacheTable : ");
     
-    PVOID base = GetKernelBase(NULL);
+    void* base = GetKernelBase(NULL);
     if (!base)
         return;
 
@@ -20,8 +20,8 @@ VOID CheckPIDDBCacheTable()
 
     PiDDBCacheTablePtr = ((uintptr_t)PiDDBCacheTablePtr + 3);
 
-    PiDDBLock = (PERESOURCE)(ResolveRelativeAddress((PVOID)PiDDBLockPtr, 3, 7));
-    table = (PRTL_AVL_TABLE)(ResolveRelativeAddress((PVOID)PiDDBCacheTablePtr, 3, 7));
+    PiDDBLock = (PERESOURCE)(ResolveRelativeAddress((void*)PiDDBLockPtr, 3, 7));
+    table = (PRTL_AVL_TABLE)(ResolveRelativeAddress((void*)PiDDBCacheTablePtr, 3, 7));
 
     ExAcquireResourceExclusiveLite(PiDDBLock, TRUE);
 

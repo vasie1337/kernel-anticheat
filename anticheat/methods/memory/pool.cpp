@@ -1,37 +1,44 @@
 #include "pool.h"
 
-VOID ScanBigPool()
+#define TdlS_TAG 'SldT'
+#define TdlS_OFFSET 0x184
+#define TdlS_TIMESTAMP 0x0B024BC8B48
+
+bool pool::scan_big_pool()
 {
-	DbgPrintEx(0, 0, "Scanning Big Pool :");
+	PSYSTEM_BIGPOOL_INFORMATION info = get_big_pool_info();
+	if (!info)
+		return false;
 
-	ULONG len = 4 * 1024 * 1024;
-	PVOID mem = ExAllocatePoolWithTag(NonPagedPool, len, AC_POOL_TAG);
+	for (ULONG i = 0; i < info->Count; i++)
+	{
+		if (info->AllocatedInfo[i].TagULong != TdlS_TAG)
+			return false;
 
-	if (!NT_SUCCESS(ZwQuerySystemInformation(0x42, mem, len, &len)))
-		return;
+		void* page = MmMapIoSpaceEx(MmGetPhysicalAddress(reinterpret_cast<void*>(info->AllocatedInfo[i].VirtualAddress)), PAGE_SIZE, PAGE_READWRITE);
+		if (reinterpret_cast<uintptr_t>(page) + TdlS_OFFSET == TdlS_TIMESTAMP)
+			DbgPrint("[DETECTION] Timestamp found in pool\n");
 
-	PSYSTEM_BIGPOOL_INFORMATION pBuf = (PSYSTEM_BIGPOOL_INFORMATION)mem;
-	for (ULONG i = 0; i < pBuf->Count; i++) {
-		__try {
-
-			if (pBuf->AllocatedInfo[i].TagULong != 'SldT')
-				return;
-
-			DbgPrint("[FLAG] TdlS pooltag detected\n");
-
-			PVOID page = MmMapIoSpaceEx(MmGetPhysicalAddress((void*)pBuf->AllocatedInfo[i].VirtualAddress), PAGE_SIZE, PAGE_READWRITE);
-
-			if ((uintptr_t)page + 0x184 == 0x0B024BC8B48)
-				DbgPrint("[DETECTION] 0x0B024BC8B48 found at pool + 0x184\n");
-
-			MmUnmapIoSpace(page, PAGE_SIZE);
-
-		}
-		__except (EXCEPTION_EXECUTE_HANDLER) {
-		}
+		MmUnmapIoSpace(page, PAGE_SIZE);
 	}
 
-	ExFreePoolWithTag(mem, AC_POOL_TAG);
+	ExFreePool(info);
+	return true;
+}
 
-	DbgPrintEx(0, 0, "Finished Scanning Big Pool :");
+PSYSTEM_BIGPOOL_INFORMATION pool::get_big_pool_info()
+{
+	ULONG size = 4 * 1024 * 1024;
+	void* buffer = ExAllocatePool(NonPagedPool, size);
+	if (!buffer)
+		return false;
+
+	PSYSTEM_BIGPOOL_INFORMATION info = reinterpret_cast<PSYSTEM_BIGPOOL_INFORMATION>(buffer);
+	if (!NT_SUCCESS(ZwQuerySystemInformation(0x42, buffer, size, &size))) /* SystemBigPoolInformation */
+	{
+		ExFreePool(buffer);
+		return false;
+	}
+
+	return info;
 }
