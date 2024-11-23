@@ -9,3 +9,5 @@ public:
 private:
 
 };
+
+inline traces g_traces;

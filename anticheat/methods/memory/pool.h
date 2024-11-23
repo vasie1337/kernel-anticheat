@@ -8,3 +8,5 @@ public:
 private:
 	PSYSTEM_BIGPOOL_INFORMATION get_big_pool_info();
 };
+
+inline pool g_pool;

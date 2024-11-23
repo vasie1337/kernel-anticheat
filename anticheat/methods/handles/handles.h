@@ -21,3 +21,5 @@ private:
 	/// </returns>
 	PSYSTEM_HANDLE_INFORMATION get_handle_list();
 };
+
+inline handles g_handles;

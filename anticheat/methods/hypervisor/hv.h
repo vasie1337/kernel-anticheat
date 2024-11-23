@@ -8,3 +8,5 @@ public:
 private:
 
 };
+
+inline hv g_hv;

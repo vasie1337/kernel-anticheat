@@ -9,3 +9,5 @@ public:
 private:
 
 };
+
+inline drivers g_drivers;

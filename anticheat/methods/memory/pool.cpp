@@ -31,13 +31,13 @@ PSYSTEM_BIGPOOL_INFORMATION pool::get_big_pool_info()
 	ULONG size = 4 * 1024 * 1024;
 	void* buffer = ExAllocatePool(NonPagedPool, size);
 	if (!buffer)
-		return false;
+		return nullptr;
 
 	PSYSTEM_BIGPOOL_INFORMATION info = reinterpret_cast<PSYSTEM_BIGPOOL_INFORMATION>(buffer);
 	if (!NT_SUCCESS(ZwQuerySystemInformation(0x42, buffer, size, &size))) /* SystemBigPoolInformation */
 	{
 		ExFreePool(buffer);
-		return false;
+		return nullptr;
 	}
 
 	return info;

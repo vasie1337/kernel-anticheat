@@ -32,3 +32,5 @@ private:
 
 	bool did_init = false;
 };
+
+inline nmi g_nmi;

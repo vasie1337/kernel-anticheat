@@ -18,3 +18,5 @@ private:
 	void PrintSystemSerialNumber();
 	void PrintSystemUuid();
 };
+
+inline serial g_serial;
