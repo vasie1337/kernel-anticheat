@@ -27,6 +27,8 @@ bool handles::check_physical_mem_handles()
 		return false;
 	}
 
+	bool found = false;
+
 	for (ULONG i = 0; i < handles->uCount; i++)
 	{
 		if (handles->Handles[i].uIdProcess == 4)
@@ -40,12 +42,17 @@ bool handles::check_physical_mem_handles()
 					handles->Handles[i].uIdProcess, 
 					handles->Handles[i].GrantedAccess
 				);
+
+				found = true;
 			}
 		}
 	}
 
 	ObDereferenceObject(object);
 	ExFreePool(handles);
+
+	if (!found)
+		printf("No usermode PhysicalMemory handles detected.\n");
 
 	return true;
 }

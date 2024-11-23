@@ -10,19 +10,31 @@ bool pool::scan_big_pool()
 	if (!info)
 		return false;
 
+	bool found = false;
+
 	for (ULONG i = 0; i < info->Count; i++)
 	{
 		if (info->AllocatedInfo[i].TagULong != TdlS_TAG)
 			return false;
 
+		found = true;
+
+		printf("Found TdlS tag in big pool\n");
+
 		void* page = MmMapIoSpaceEx(MmGetPhysicalAddress(reinterpret_cast<void*>(info->AllocatedInfo[i].VirtualAddress)), PAGE_SIZE, PAGE_READWRITE);
 		if (reinterpret_cast<uintptr_t>(page) + TdlS_OFFSET == TdlS_TIMESTAMP)
-			printf("[DETECTION] Timestamp found in pool\n");
+		{
+			printf("TdlS timestamp found in pool\n");
+		}
 
 		MmUnmapIoSpace(page, PAGE_SIZE);
 	}
 
 	ExFreePool(info);
+
+	if (!found)
+		printf("Nothing found in bigpool\n");
+
 	return true;
 }
 

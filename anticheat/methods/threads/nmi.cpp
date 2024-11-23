@@ -37,12 +37,14 @@ bool nmi::scan(int count)
 {
 	if (!did_init)
 	{
+		printf("NMI not initialized\n");
 		return false;
 	}
 
 	nmi_handle = KeRegisterNmiCallback(callback, nullptr);
 	if (!nmi_handle)
 	{
+		printf("Failed to register NMI callback\n");
 		return false;
 	}
 
@@ -72,7 +74,7 @@ void nmi::fire_nmi(int core, PKAFFINITY_EX mask)
 
 BOOLEAN nmi::callback(PVOID context, BOOLEAN handled)
 {
-	printf(0, 0, "NMI fired\n");
+	printf("NMI fired\n");
 
 	return true;
 }

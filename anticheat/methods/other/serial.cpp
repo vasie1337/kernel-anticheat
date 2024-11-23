@@ -1,6 +1,6 @@
 #include "serial.h"
 
-void serial::PrintSerials()
+void serial::print()
 {
 	PrintBootUUID();
 	PrintDiskUUID();

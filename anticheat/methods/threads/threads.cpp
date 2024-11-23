@@ -2,6 +2,8 @@
 
 void threads::scan_system_threads()
 {
+	bool found = false;
+
 	for (ULONG thrd_id = 4; thrd_id < 0x30000; thrd_id += 4)
 	{
 		PETHREAD thread_obj = nullptr;
@@ -13,8 +15,15 @@ void threads::scan_system_threads()
 
 		uintptr_t start_addr = get_thread_start_address(thread_obj);
 		if (start_addr && address_outside_modules(start_addr))
+		{
 			printf("Startaddress not valid : %llx", start_addr);
-			
+			found = true;
+		}
+	}
+
+	if (!found)
+	{
+		printf("No invalid startaddresses found");
 	}
 }
 

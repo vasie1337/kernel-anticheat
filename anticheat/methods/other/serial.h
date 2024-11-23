@@ -4,7 +4,7 @@
 class serial
 {
 public:
-	void PrintSerials();
+	void print();
 
 private:
 	void PrintBootUUID();
