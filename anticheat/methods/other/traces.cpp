@@ -1,4 +1,4 @@
-#include "defs.h"
+#include "traces.h"
 
 VOID CheckPIDDBCacheTable()
 {

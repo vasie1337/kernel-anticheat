@@ -1,4 +1,4 @@
-#include "defs.h"
+#include "nmi.h"
 
 PVOID               g_NmiCallbackHandle;
 PKAFFINITY_EX       g_NmiAffinity;

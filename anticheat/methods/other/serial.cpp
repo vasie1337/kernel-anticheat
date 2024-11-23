@@ -1,4 +1,4 @@
-#include "defs.h"
+#include "serial.h"
 
 VOID PrintBootUUID()
 {	

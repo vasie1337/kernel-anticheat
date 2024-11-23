@@ -5,20 +5,6 @@
 #include <ntstrsafe.h>
 #include <windef.h>
 
-// Defines
-#define AC_POOL_TAG 'BCmN'
-
-// Disable Warnings
-#pragma warning(disable : 4996)
-#pragma warning(disable : 4200)
-#pragma warning(disable : 4310)
-#pragma warning(disable : 4022)
-#pragma warning(disable : 6387)
-#pragma warning(disable : 6011)
-#pragma warning(disable : 4201)
-#pragma warning(disable : 4047)
-#pragma warning(disable : 4024)
-
 // Structs + Enums
 typedef struct _SYSTEM_HANDLE
 {
@@ -182,29 +168,9 @@ typedef struct _DIRECTORY_BASIC_INFORMATION {
 	UNICODE_STRING ObjectTypeName;
 } DIRECTORY_BASIC_INFORMATION, * PDIRECTORY_BASIC_INFORMATION;
 
-// Function Declarations
-VOID PrintBootUUID();
-VOID StartNMI();
-VOID StopNMI();
-VOID CheckPIDDBCacheTable();
-VOID HypervisorDetection();
-VOID ScanBigPool();
-VOID ScanSystemThreads();
-VOID CheckPhysicalMemHandles();
-
-VOID Log(char* text);
-VOID DelayExecutionThread(INT64 ms);
-VOID WaitThreadTerminate(HANDLE ThreadHandle);
-VOID GetThreadStartAddress(PETHREAD ThreadObj, uintptr_t* pStartAddr);
-BOOL IsAdressOutsideModulelist(uintptr_t address);
-BOOL DataCompare(const BYTE* pData, const BYTE* bMask, const char* szMask);
-INT64 SecInNs(INT64 ms);
-PVOID ResolveRelativeAddress(PVOID Instruction, ULONG OffsetOffset, ULONG InstructionSize);
-PVOID GetKernelBase(OUT PULONG pSize);
-UINT64 FindPattern(UINT64 dwAddress, UINT64 dwLen, BYTE* bMask, char* szMask);
-PSYSTEM_HANDLE_INFORMATION GetHandleList();
-
 // Imports
+EXTERN_C_START
+
 VOID KeInitializeAffinityEx(PKAFFINITY_EX affinity);
 VOID KeAddProcessorAffinityEx(PKAFFINITY_EX affinity, INT num);
 VOID HalSendNMI(PKAFFINITY_EX affinity);
@@ -212,3 +178,5 @@ NTSTATUS MmCopyVirtualMemory(PEPROCESS SourceProcess, PVOID SourceAddress, PEPRO
 NTSTATUS ZwQuerySystemInformation(ULONG InfoClass, PVOID Buffer, ULONG Length, PULONG ReturnLength);
 NTSTATUS NtQueryInformationThread(HANDLE ThreadHandle, THREADINFOCLASS ThreadInformationClass, PVOID ThreadInformation, ULONG ThreadInformationLength, PULONG ReturnLength);
 __int64 __fastcall PsGetProcessSectionBaseAddress(__int64 a1);
+
+EXTERN_C_END

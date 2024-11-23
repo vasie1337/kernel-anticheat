@@ -175,18 +175,28 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hypervisor.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="nmi.c" />
-    <ClCompile Include="handles.c" />
-    <ClCompile Include="pool.c" />
-    <ClCompile Include="serial.c" />
-    <ClCompile Include="threads.c" />
-    <ClCompile Include="traces.c" />
+    <ClCompile Include="methods\drivers\drivers.cpp" />
+    <ClCompile Include="methods\hypervisor\hv.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="methods\threads\nmi.cpp" />
+    <ClCompile Include="methods\handles\handles.cpp" />
+    <ClCompile Include="methods\memory\pool.cpp" />
+    <ClCompile Include="methods\other\serial.cpp" />
+    <ClCompile Include="methods\threads\threads.cpp" />
+    <ClCompile Include="methods\other\traces.cpp" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="defs.h" />
+    <ClInclude Include="kernel.h" />
+    <ClInclude Include="include.h" />
+    <ClInclude Include="methods\drivers\drivers.h" />
+    <ClInclude Include="methods\handles\handles.h" />
+    <ClInclude Include="methods\hypervisor\hv.h" />
+    <ClInclude Include="methods\memory\pool.h" />
+    <ClInclude Include="methods\other\traces.h" />
+    <ClInclude Include="methods\other\serial.h" />
+    <ClInclude Include="methods\threads\threads.h" />
+    <ClInclude Include="methods\threads\nmi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

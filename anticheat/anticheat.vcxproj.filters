@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="methods\hypervisor\hv.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="methods\threads\nmi.cpp" />
+    <ClCompile Include="methods\handles\handles.cpp" />
+    <ClCompile Include="methods\memory\pool.cpp" />
+    <ClCompile Include="methods\other\serial.cpp" />
+    <ClCompile Include="methods\threads\threads.cpp" />
+    <ClCompile Include="methods\other\traces.cpp" />
+    <ClCompile Include="utils.c" />
+    <ClCompile Include="methods\drivers\drivers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="kernel.h" />
+    <ClInclude Include="methods\drivers\drivers.h" />
+    <ClInclude Include="include.h" />
+    <ClInclude Include="methods\handles\handles.h" />
+    <ClInclude Include="methods\hypervisor\hv.h" />
+    <ClInclude Include="methods\memory\pool.h" />
+    <ClInclude Include="methods\other\serial.h" />
+    <ClInclude Include="methods\other\traces.h" />
+    <ClInclude Include="methods\threads\nmi.h" />
+    <ClInclude Include="methods\threads\threads.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="anticheat.inf" />
+  </ItemGroup>
+</Project>

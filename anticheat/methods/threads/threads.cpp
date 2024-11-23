@@ -1,4 +1,4 @@
-#include "defs.h"
+#include "threads.h"
 
 VOID ScanSystemThreads()
 {

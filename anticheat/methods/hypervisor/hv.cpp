@@ -1,4 +1,4 @@
-#include "defs.h"
+#include "hv.h"
 
 VOID HypervisorDetection()
 {
