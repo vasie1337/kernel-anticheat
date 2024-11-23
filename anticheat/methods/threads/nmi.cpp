@@ -49,14 +49,19 @@ bool nmi::fire(int count)
 	}
 
 	LARGE_INTEGER delay = { 0 };
-	delay.QuadPart = -(10 * 100); // 10ms
+	delay.QuadPart = -(100 * 100); // 100ms
 
 	for (int i = 0; i < count; i++)
 	{
 		for (int j = 0; j < core_count; j++)
 		{
+			nmi_handled = false;
 			fire_nmi(j, mask);
-			KeDelayExecutionThread(KernelMode, FALSE, &delay);
+
+			while (!nmi_handled)
+				KeDelayExecutionThread(KernelMode, FALSE, &delay);
+
+			KeDelayExecutionThread(KernelMode, FALSE, &delay); // Extra delay to prevent nmi collisions
 		}
 	}
 
@@ -143,6 +148,7 @@ BOOLEAN nmi::callback(PVOID context, BOOLEAN handled)
 	printf("[NMI] NMI fired\n");
 
 	capture_stack();
+	nmi_handled = true;
 
 	return true;
 }

@@ -24,6 +24,7 @@ private:
 	HANDLE nmi_handle = nullptr;
 
 	bool did_init = false;
+	inline static bool nmi_handled = false;
 };
 
 inline nmi g_nmi;
