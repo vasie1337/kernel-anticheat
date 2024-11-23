@@ -13,7 +13,7 @@ void threads::scan_system_threads()
 
 		uintptr_t start_addr = get_thread_start_address(thread_obj);
 		if (start_addr && address_outside_modules(start_addr))
-			DbgPrint("Startaddress not valid : %llx", start_addr);
+			printf("Startaddress not valid : %llx", start_addr);
 			
 	}
 }
@@ -55,6 +55,10 @@ bool threads::address_outside_modules(uintptr_t address)
 	ZwQuerySystemInformation(SystemModuleInformation, 0, 0, &system_info_buffer_size);
 
 	system_info_buffer = (PSYSTEM_MODULE_INFORMATION)ExAllocatePool(NonPagedPool, (SIZE_T)system_info_buffer_size * 2);
+	if (!system_info_buffer)
+	{
+		return false;
+	}
 
 	memset(system_info_buffer, 0, (SIZE_T)system_info_buffer_size * 2);
 	ZwQuerySystemInformation(SystemModuleInformation, system_info_buffer, (SIZE_T)system_info_buffer_size * 2, &system_info_buffer_size);

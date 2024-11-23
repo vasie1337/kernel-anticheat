@@ -17,7 +17,7 @@ bool pool::scan_big_pool()
 
 		void* page = MmMapIoSpaceEx(MmGetPhysicalAddress(reinterpret_cast<void*>(info->AllocatedInfo[i].VirtualAddress)), PAGE_SIZE, PAGE_READWRITE);
 		if (reinterpret_cast<uintptr_t>(page) + TdlS_OFFSET == TdlS_TIMESTAMP)
-			DbgPrint("[DETECTION] Timestamp found in pool\n");
+			printf("[DETECTION] Timestamp found in pool\n");
 
 		MmUnmapIoSpace(page, PAGE_SIZE);
 	}

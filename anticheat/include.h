@@ -5,6 +5,8 @@
 #include <ntstrsafe.h>
 #include <windef.h>
 
+#define printf(text, ...) DbgPrintEx(DPFLTR_IHVBUS_ID, 0, text, ##__VA_ARGS__)
+
 #include "kernel.h"
 
 #include "methods/drivers/drivers.h"

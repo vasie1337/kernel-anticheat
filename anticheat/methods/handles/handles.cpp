@@ -36,7 +36,7 @@ bool handles::check_physical_mem_handles()
 		{
 			if (!ObIsKernelHandle(reinterpret_cast<HANDLE>(handles->Handles[i].Handle)))
 			{
-				DbgPrint("Usermode PhysicalMemory handle detected, pid = %d, access = 0x%x.\n", 
+				printf("Usermode PhysicalMemory handle detected, pid = %d, access = 0x%x.\n",
 					handles->Handles[i].uIdProcess, 
 					handles->Handles[i].GrantedAccess
 				);

@@ -72,7 +72,7 @@ void nmi::fire_nmi(int core, PKAFFINITY_EX mask)
 
 BOOLEAN nmi::callback(PVOID context, BOOLEAN handled)
 {
-	DbgPrintEx(0, 0, "NMI fired\n");
+	printf(0, 0, "NMI fired\n");
 
 	return true;
 }
