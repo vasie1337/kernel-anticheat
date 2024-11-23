@@ -9,7 +9,6 @@
     <ClCompile Include="methods\other\serial.cpp" />
     <ClCompile Include="methods\threads\threads.cpp" />
     <ClCompile Include="methods\other\traces.cpp" />
-    <ClCompile Include="utils.c" />
     <ClCompile Include="methods\drivers\drivers.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -154,10 +154,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <DriverSign>
       <FileDigestAlgorithm>SHA1</FileDigestAlgorithm>
     </DriverSign>
+    <Link>
+      <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DriverSign>
@@ -166,7 +170,12 @@
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
+    <Link>
+      <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Inf Include="anticheat.inf" />
@@ -184,7 +193,6 @@
     <ClCompile Include="methods\other\serial.cpp" />
     <ClCompile Include="methods\threads\threads.cpp" />
     <ClCompile Include="methods\other\traces.cpp" />
-    <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kernel.h" />
