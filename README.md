@@ -1,5 +1,4 @@
-# Kernel-Anticheat - Check your detection vectors
-[Unknowncheats post](https://www.unknowncheats.me/forum/anti-cheat-bypass/569165-kernel-anticheat-check-detection-vectors.html)
+# Kernel-Anticheat
 
 ## Project Overview
 This project is a kernel driver made for Windows that will scan your pc for cheat behaviour
